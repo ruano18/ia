@@ -1,0 +1,4 @@
+from pyamaze import maze,agent
+
+#crear laberinto
+#x,y posicion de la meta
