@@ -1,0 +1,38 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+#genera datos prueba
+mm = 3.0
+bb = 5.0
+x = np.linspace(0.0,1.0,400,dtype=np.float32)
+e = np.random.normal(0,0.1,400)
+y = mm*x+bb+e
+
+x1 = np.linspace(1.0,2.0,20,dtype=np.float32)
+e1 = np.random.normal(0,0.1,20)
+y1 = mm*x1+bb+e1
+m = 0
+b = 0
+
+#tasa de aprendizaje
+L = 0.1
+
+#iteraciones
+epochs = 200
+
+#minimizar caminando por la direccion -gradiente
+n = float(len(x))
+for i in range(epochs): 
+  y_pred = m*x+b #prediccion de y
+  d_m = (-2.0/n) * sum(x*(y - y_pred)) #derivada parcial con m 
+  d_b = (-2.0/n) * sum(y - y_pred) #derivada parcial con b
+  m = m - L * d_m #mejorar m
+  b = b - L * d_b #mejorar b
+
+print(m,b)
+yy = m*x1+b
+
+#graficas 
+plt.scatter(x1,y1,color="red")
+plt.plot(x1,y1,color="black", linewidth=1)
+plt.show()
