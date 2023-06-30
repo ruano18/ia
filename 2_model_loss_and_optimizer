@@ -1,0 +1,68 @@
+import torch
+import torch.nn as nn
+
+#-----------------------------------------
+# regresion lineal
+# f = w * x 
+#-----------------------------------------
+
+#-----------------------------------------
+# 0) datos de entrenamiento, cuidado con las dimensiones
+#-----------------------------------------
+X = torch.tensor([[1], [2], [3], [4]], dtype=torch.float32)
+Y = torch.tensor([[2], [4], [6], [8]], dtype=torch.float32)
+n_samples, n_features = X.shape
+print(f'#samples: {n_samples}, #features: {n_features}')
+
+#-----------------------------------------
+# 0) dato de prueba
+#-----------------------------------------
+X_test = torch.tensor([5], dtype=torch.float32)
+
+#-----------------------------------------
+# 1) diseño del modelo (debe contener la fórmula a evaluar)
+# podemos utilizar un modelo ya incluido en pytorch
+#-----------------------------------------
+input_size = n_features
+output_size = n_features
+
+#-----------------------------------------
+# diseño del modelo (lineal) con dimensiones de entrada y salida
+#-----------------------------------------
+model = nn.Linear(input_size, output_size)
+print(f'Prediccion antes del aprendizaje: f(5) = {model(X_test).item():.3f}')
+
+#-----------------------------------------
+# 2) definir error y optimizador
+#-----------------------------------------
+learning_rate = 0.01
+n_iters = 100
+# error
+loss = nn.MSELoss()
+#optimizador 
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+
+#-----------------------------------------
+# 3) ciclo de aprendizaje
+#-----------------------------------------
+for epoch in range(n_iters):
+    # predict = evaluar funcion (forward)
+    y_predicted = model(X)
+
+    # error
+    l = loss(Y, y_predicted)
+
+    # calcular gradiente = retropropagacion
+    l.backward()
+
+    # mejorar coeficientes
+    optimizer.step()
+
+    # resetear coeficientes
+    optimizer.zero_grad()
+    #diagnostico
+    if epoch % 10 == 0:
+        [w, b] = model.parameters() # unpack parameters
+        print('epoch ', epoch+1, ': w = ', w[0][0].item(), ' loss = ', l)
+
+print(f'Prediccion despues del aprendizaje: f(5) = {model(X_test).item():.3f}')
