@@ -3,40 +3,61 @@ import numpy as np
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
+#------------------------------------------------------
 #carga de datos prueba (diabetes)
+#------------------------------------------------------
 diabetes_x, diabetes_y = datasets.load_diabetes(return_x_y=True)
 
+#------------------------------------------------------
 #utlizar solo una parte de los datos
+#------------------------------------------------------
 diabetes_x = diabetes_x[:, np.newaxis, 2]
 
+#------------------------------------------------------
 #separar datos en conjuntos de entrenamiento/prueba
+#------------------------------------------------------
 diabetes_x_train = diabetes_x[:-20]
 diabetes_x_test = diabetes_x[-20:]
 
+#------------------------------------------------------
 #separar resultados en conjuntos de entrenamiento/prueba
-
+#------------------------------------------------------
 diabetes_y_train = diabetes_y[:-20]
 diabetes_y_test = diabetes_y[-20:]
 
+#------------------------------------------------------
 #crear objeto regresion lineal
+#------------------------------------------------------
 regr_lin = linear_model.LinearRegression()
 
+#------------------------------------------------------
 #entrenar modelo
+#------------------------------------------------------
 regr_lin.fit(diabetes_x_train, diabe4tes_y_train)
 
+#------------------------------------------------------
 #prediccion
+#------------------------------------------------------
 diabetes_y_pred = regr_lin.predict(diabetes_x_test)
 
+#------------------------------------------------------
 #los coeficiones
+#------------------------------------------------------
 print("coeficientes: ", regr_lin.coef_)
 
+#------------------------------------------------------
 #error medio al cuadrado
+#------------------------------------------------------
 print("errror medio al cuadrado: %.2f" % mean_squared_error(diabetes_y_test, diabetes_y_pred))
 
+#------------------------------------------------------
 #coeficientes de determninacion: 1 es prediccion perfecta
+#------------------------------------------------------
 print("coeficiente de determinacion. %.2f" % r2_score(diabetes_y_test, diabetes_y_pred))
 
+#------------------------------------------------------
 #graficas
+#------------------------------------------------------
 plt.scatter(diabetes_x_test, diabetes_y_test, color="blue")
 plt.plot(diabetes_x_test, diabetes_y_pred, color="black", linewidth=3)
 
