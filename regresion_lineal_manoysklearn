@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+#------------------------------------------------------
 #genera datos prueba
+#------------------------------------------------------
 mm = 3.0
 bb = 5.0
 x = np.linspace(0.0,1.0,400,dtype=np.float32)
@@ -14,13 +16,19 @@ y1 = mm*x1+bb+e1
 m = 0
 b = 0
 
+#------------------------------------------------------
 #tasa de aprendizaje
+#------------------------------------------------------
 L = 0.1
 
+#------------------------------------------------------
 #iteraciones
+#------------------------------------------------------
 epochs = 200
 
+#------------------------------------------------------
 #minimizar caminando por la direccion -gradiente
+#------------------------------------------------------
 n = float(len(x))
 for i in range(epochs): 
   y_pred = m*x+b #prediccion de y
@@ -32,7 +40,9 @@ for i in range(epochs):
 print(m,b)
 yy = m*x1+b
 
+#------------------------------------------------------
 #graficas 
+#------------------------------------------------------
 plt.scatter(x1,y1,color="red")
 plt.plot(x1,y1,color="black", linewidth=1)
 plt.show()
